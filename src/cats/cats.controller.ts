@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseFilters, ForbiddenException, HttpException } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -6,13 +6,13 @@ import { HttpExceptionFilter } from 'src/common/http-exception.filter';
 import { ValidationPipe } from 'src/common/validation.pipe';
 
 @Controller('cats')
+@UseFilters(new HttpExceptionFilter)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
-  //@UseFilters(new HttpExceptionFilter)
   create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
-    //throw new ForbiddenException();
+    throw new HttpException('api broken', 401);
     return this.catsService.create(createCatDto);
   }
 
