@@ -25,7 +25,7 @@ export class CatsController {
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    console.log("hello");
+    //console.log("hello");
     return {cats: 'get on cat api'};
     //return this.catsService.findOne(id);
   }
