@@ -12,31 +12,28 @@ import { SuccessInterceptor } from 'src/common/success.interceptor';
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  @Post()
-  create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
-    throw new HttpException('api broken', 401);
-    return this.catsService.create(createCatDto);
-  }
-
   @Get()
-  findAll() {
-    return this.catsService.findAll();
+  getCurrentCat(){
+    return 'current cat';
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    //console.log("hello");
-    return {cats: 'get on cat api'};
-    //return this.catsService.findOne(id);
+  @Post()
+  signUp(){
+    return 'signup';
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-    return this.catsService.update(+id, updateCatDto);
+  @Post('login')
+  logIn(){
+    return 'login';
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.catsService.remove(+id);
+  @Post('logout')
+  logOut(){
+    return 'logout';
+  }
+
+  @Post('upload')
+  uploadCatImg(){
+    return 'uploadImg';
   }
 }

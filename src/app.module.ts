@@ -16,8 +16,9 @@ import { ConfigModule } from '@nestjs/config';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
+  private readonly isDev:boolean = process.env.MODE! === 'dev';
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
-    mongoose.set('debug', true);
+    mongoose.set('debug', this.isDev);
   }
 }
