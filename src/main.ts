@@ -18,6 +18,10 @@ async function bootstrap() {
   
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter()); //글로벌 예외 필터
+  app.enableCors({
+    origin: true,
+    credential: true
+  });
   await app.listen(process.env.PORT!);
 }
 bootstrap();
