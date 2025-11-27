@@ -8,6 +8,18 @@ import { CreateCatDto } from "./dto/create-cat.dto";
 export class CatsRepository {
     constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>){}
  
+    async findByIdAndUpdateImg(id: string, fileName: string){
+        const cat = await this.catModel.findById(id);
+        if(cat){
+            cat.imgUrl = `http://localhost:${process.env.PORT!}/media/${fileName}`;
+            const newCat = await cat!.save();
+            console.log(newCat);
+            return newCat.readOnlyData;
+        }else{
+            throw new HttpException('업로드 되지 않았습니다.', 403);
+        }
+    }
+
     async findCatByIdWithoutPassowrd(catId: string): Promise<Cat | null>{
         // select: 원하는 필드만 추출 ex) name id
         const cat = await this.catModel.findById(catId).select("-password");

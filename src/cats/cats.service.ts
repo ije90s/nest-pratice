@@ -3,11 +3,20 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import * as bcrypt from 'bcrypt';
 import { CatsRepository } from './cats.repository';
+import { Cat } from './cats.schema';
 
 @Injectable()
 export class CatsService {
   constructor(private readonly catRepository: CatsRepository){}
   
+  async uploadImg(cat: Cat, files: Express.Multer.File[]){
+    const fileName = `cats/${files[0].filename}`;
+    console.log(fileName);
+    const newCat = await this.catRepository.findByIdAndUpdateImg(cat.readOnlyData.id, fileName);
+    console.log(newCat);
+    return newCat;
+  }
+
   async signUp(body: CreateCatDto){
     const { email, name, password } = body;
     const isCatExist = await this.catRepository.existsByEmail(email);

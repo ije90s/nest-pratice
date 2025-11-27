@@ -47,11 +47,13 @@ export class Cat {
   @IsNotEmpty()
   password: string;
 
-  @Prop()
+  @Prop({
+    default: ''
+  })
   @IsString()
   imgUrl: string;
 
-  readonly readOnlyData: {id: string; email: string; name:string};
+  readonly readOnlyData: {id: string; email: string; name:string, imgUrl: string};
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
@@ -62,5 +64,6 @@ CatSchema.virtual('readOnlyData').get(function (this: HydratedDocument<Cat>) {
     id: this.id, // virtual 내에서 _id 바인딩
     email: this.email,
     name: this.name,
+    imgUrl: this.imgUrl,
   }
 });
