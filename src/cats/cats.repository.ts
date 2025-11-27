@@ -7,6 +7,12 @@ import { CreateCatDto } from "./dto/create-cat.dto";
 @Injectable()
 export class CatsRepository {
     constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>){}
+ 
+    async findCatByIdWithoutPassowrd(catId: string): Promise<Cat | null>{
+        // select: 원하는 필드만 추출 ex) name id
+        const cat = await this.catModel.findById(catId).select("-password");
+        return cat;
+    }
 
     async findCatByEmail(email: string): Promise<Cat | null>{
         const cat = await this.catModel.findOne({email});
