@@ -8,6 +8,10 @@ import { CreateCatDto } from "./dto/create-cat.dto";
 export class CatsRepository {
     constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>){}
  
+    async findAll(): Promise<Cat[] | []>{
+        return await this.catModel.find();
+    }
+
     async findByIdAndUpdateImg(id: string, fileName: string){
         const cat = await this.catModel.findById(id);
         if(cat){

@@ -9,6 +9,12 @@ import { Cat } from './cats.schema';
 export class CatsService {
   constructor(private readonly catRepository: CatsRepository){}
   
+  async getAllCat(){
+    const allCat = await this.catRepository.findAll();
+    const readOnlyCats = allCat.map((cat: Cat) => cat.readOnlyData);
+    return readOnlyCats;
+  }
+
   async uploadImg(cat: Cat, files: Express.Multer.File[]){
     const fileName = `cats/${files[0].filename}`;
     console.log(fileName);
