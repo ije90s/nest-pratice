@@ -1,15 +1,19 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { Cat } from "./cats.schema";
+import { Cat,  } from "./cats.schema";
 import { CreateCatDto } from "./dto/create-cat.dto";
+import { Comments } from "src/comments/comments.schema";
+import { Model, Types } from "mongoose";
 
 @Injectable()
 export class CatsRepository {
-    constructor(@InjectModel(Cat.name) private readonly catModel: Model<Cat>){}
+    constructor(
+        @InjectModel(Cat.name) private readonly catModel: Model<Cat>
+    ){}
  
-    async findAll(): Promise<Cat[] | []>{
-        return await this.catModel.find();
+    async findAll(){
+        const result = await this.catModel.find().populate("comments");
+        return result;
     }
 
     async findByIdAndUpdateImg(id: string, fileName: string){
@@ -24,7 +28,7 @@ export class CatsRepository {
         }
     }
 
-    async findCatByIdWithoutPassowrd(catId: string): Promise<Cat | null>{
+    async findCatByIdWithoutPassowrd(catId: string | Types.ObjectId): Promise<Cat | null>{
         // select: 원하는 필드만 추출 ex) name id
         const cat = await this.catModel.findById(catId).select("-password");
         return cat;

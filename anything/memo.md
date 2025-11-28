@@ -127,3 +127,8 @@ type CatType = CatInterface & { createdAt: Date };
 즉, NestJS에서는 대부분 클래스 + DTO + interface/type 혼용
 interface = 클래스 구현 가능, 객체 구조 정의용
 type = 거의 모든 타입 정의 가능, 합성/유니언/튜플에 강점
+
+- https://mongoosejs.com/docs/populate.html
+  - ❗️collections명 정확히 명시
+
+- 이전 NestJs보다 타입스크립트를 엄격하게 판별하기 때문에 _id 같은 것도 스키마에 명시해야 함

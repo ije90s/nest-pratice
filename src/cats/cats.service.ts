@@ -3,7 +3,7 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import * as bcrypt from 'bcrypt';
 import { CatsRepository } from './cats.repository';
-import { Cat } from './cats.schema';
+import { Cat, CatWithComments} from './cats.schema';
 
 @Injectable()
 export class CatsService {
@@ -11,7 +11,7 @@ export class CatsService {
   
   async getAllCat(){
     const allCat = await this.catRepository.findAll();
-    const readOnlyCats = allCat.map((cat: Cat) => cat.readOnlyData);
+    const readOnlyCats = allCat.map((cat: CatWithComments) => cat.readOnlyData);
     return readOnlyCats;
   }
 
